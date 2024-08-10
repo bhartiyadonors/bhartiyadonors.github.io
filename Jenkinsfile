@@ -13,19 +13,23 @@ pipeline {
 
         stage("Checkout from SCM") {
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/bhartiyadonors/bhartiyadonors.github.io.git'
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/bhartiyadonors/bhartiyadonors.github.io'
             }
         }
 
         stage("Build Application") {
             steps {
-                sh "mvn clean package"
+                dir('/home/ubuntu') {  // Ensure we are in the correct directory
+                    sh "mvn clean package"
+                }
             }
         }
 
         stage("Test Application") {
             steps {
-                sh "mvn test"
+                dir('/home/ubuntu') {  // Ensure we are in the correct directory
+                    sh "mvn test"
+                }
             }
         }
     }
